@@ -1,0 +1,68 @@
+curl -X PUT "localhost:9200/art_v1?pretty"
+
+curl -X GET "localhost:9200/fish/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+    "query" : {
+        "match" : { "Name" : "sea bass" }
+    }
+}
+'
+
+
+curl -X POST "localhost:9200/_aliases?pretty" -H 'Content-Type: application/json' -d'
+{
+    "actions" : [
+        { "add" : { "index" : "art_v1", "alias" : "art" } }
+    ]
+}
+'
+
+curl -X POST "localhost:9200/_aliases?pretty" -H 'Content-Type: application/json' -d'
+{
+    "actions" : [
+        { "remove" : { "index" : "users_v1", "alias" : "users" } }
+    ]
+}
+'
+
+
+
+curl -X GET "localhost:9200/villagers/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+    "query" : {
+        "term" : { "Birthday.keyword" : "5/13" }
+    }
+}
+'
+
+unison acnh-discord-bot ssh://chetracy//workplace/chetracy/acnh-discord-bot
+
+https://discord.com/oauth2/authorize?client_id=709555457186070629&scope=bot
+
+
+curl -X DELETE "localhost:9200/clothing_v1?pretty"
+curl -X DELETE "localhost:9200/users/_doc/360717490013339669?pretty"
+
+curl -X GET "localhost:9200/users/_doc/360717490013339669?pretty"
+
+
+curl -X GET "localhost:9200/art/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "Name.keyword": "ancient statue"
+          }
+        },
+        {
+          "term": {
+            "Genuine": "yes"
+          }
+        }
+      ]
+    }
+  }
+}
+'
