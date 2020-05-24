@@ -173,6 +173,18 @@ def index_tools():
         res = es.index(index="tools", id=mapping['Unique Entry ID'], body=mapping)
         print(res['result'])
 
+
+def index_other():
+    sheet = spreadsheet.worksheet('Other')
+    list_of_lists = sheet.get_all_values()
+    column_names = list_of_lists[0]
+    for sub_list in list_of_lists[1:]:
+        mapping = dict(zip(column_names, sub_list))
+        mapping['Inventory Image'] = 'https://acnhcdn.com/latest/MenuIcon/{}.png'.format(mapping['Filename'])
+        mapping['Storage Image'] = 'https://acnhcdn.com/latest/FtrIcon/{}.png'.format(mapping['Filename'])
+        res = es.index(index='other', id=mapping['Unique Entry ID'], body=mapping)
+        print(res['result'])
+
 art_fake_reasons = {
     'academic painting': "There's a circular stain from a mug in the top corner.",
     'amazing painting': "The character in black is missing his hat.",
@@ -234,7 +246,7 @@ def index_art():
         print(res['result'])
 
 
-index_art()
+index_other()
 #
 # def index_recipes():
 #     sheet = spreadsheet.worksheet('Recipes')

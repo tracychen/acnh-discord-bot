@@ -7,6 +7,7 @@ INFO_COMMANDS = [
         Commands.clothing,
         Commands.fish,
         Commands.flooring,
+        Commands.flower,
         Commands.fossil,
         Commands.furniture,
         Commands.music,

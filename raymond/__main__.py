@@ -57,7 +57,8 @@ async def on_message(message):
         await info.tool.handle(message)
     elif is_message_for(message, Commands.art):
         await info.art.handle(message)
-
+    elif is_message_for(message, Commands.flower):
+        await info.flower.handle(message)
     # user commands
     elif is_message_for(message, Commands.profile):
         await user.profile.handle(raymond, message)

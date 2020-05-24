@@ -15,8 +15,8 @@ class Command:
 
 class Commands:
     # feature commands
-    bug = Command('bug', "Get details on a specific bug")
-    fish = Command('fish', "Get details on a specific fish")
+    bug = Command('bug', "Get details on a specific bug or bugs available currently")
+    fish = Command('fish', "Get details on a specific fish or fish available currently")
     fossil = Command('fossil', "Get details on a specific fossil")
     clothing = Command('clothing', "Get details a specific clothing item (including umbrellas)")
     music = Command('music', "Get details on a specific K.K. Slider song")
@@ -26,6 +26,7 @@ class Commands:
     tool = Command('tool', "Get details on a specific tool")
     art = Command('art', "Get list of paintings/statues and details for specific pieces, including how to check for fakes")
     villager = Command('villager', "Get villager information or check today's birthdays")
+    flower = Command('flower', "Get flower breeding pairings and details on a specific flower")
 
 
     # user
@@ -52,8 +53,20 @@ class IndexNames:
     tools = 'tools'
     art = 'art'
     users = 'users'
+    other = 'other'
 
 
 NATIVE_FRUITS = ['apples', 'cherries', 'oranges', 'peaches', 'pears']
 NATIVE_FLOWERS = ['roses', 'hyacinths', 'mums', 'cosmos', 'pansies', 'tulips', 'lilies', 'windflowers']
 HEMISPHERES = ['northern', 'southern']
+SINGLE_FLOWERS = ['rose', 'hyacinth', 'mum', 'cosmos', 'pansy', 'tulip', 'lily', 'windflower']
+FLOWER_COLORS = {
+    'rose': ['red', 'white', 'yellow', 'pink', 'orange', 'blue', 'purple', 'black', 'gold'],
+    'hyacinth': ['red', 'white', 'yellow', 'pink', 'orange', 'blue', 'purple'],
+    'mum': ['red', 'white', 'yellow', 'pink', 'purple', 'green'],
+    'cosmos': ['red', 'white', 'yellow', 'pink', 'orange', 'black'],
+    'pansy': ['red', 'white', 'yellow', 'orange', 'blue', 'purple'],
+    'tulip': ['red', 'white', 'yellow', 'pink', 'orange', 'purple', 'black'],
+    'lily': ['red', 'white', 'yellow', 'pink', 'orange', 'black'],
+    'windflower': ['red', 'white', 'orange', 'blue', 'pink', 'purple']
+}

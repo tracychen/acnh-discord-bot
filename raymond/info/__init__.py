@@ -9,3 +9,4 @@ from . import flooring
 from . import wallpaper
 from . import tool
 from . import art
+from . import flower
