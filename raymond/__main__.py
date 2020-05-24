@@ -70,7 +70,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
     activity = discord.Game(name="!help")
-    await client.change_presence(status=discord.Status.idle, activity=activity)
+    await client.change_presence(status=discord.Status.online, activity=activity)
 
 if __name__ == '__main__':
     client.run(TOKEN)

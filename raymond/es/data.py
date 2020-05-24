@@ -93,3 +93,31 @@ def get_by_wildcard(index, attr, value, return_attributes=None):
                 ret_attr[attr] = record[attr]
             data.append(ret_attr)
     return data
+
+
+def build_get_not_matching_query(attr, value):
+    return {
+        "size": 100,
+        "query": {
+            "bool": {
+                "must_not": {
+                    "match": {attr: value}
+                }
+            }
+        }
+    }
+
+
+def get_not_matching(index, attr, value, return_attributes=None):
+    result = es.search(index=index, body=build_get_not_matching_query(attr, value))['hits']['hits']
+    if len(result) == 0:
+        return None
+    records = [result[i]['_source'] for i in range(len(result))]
+    data = []
+    if return_attributes:
+        for record in records:
+            ret_attr = {}
+            for attr in return_attributes:
+                ret_attr[attr] = record[attr]
+            data.append(ret_attr)
+    return data

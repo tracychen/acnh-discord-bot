@@ -20,7 +20,7 @@ VILLAGER_ATTRIBUTES = [
 FULL_VILLAGER_COMMAND = COMMAND_PREFIX + Commands.villager.value
 VILLAGER_USAGE = {
     '{} birthday'.format(FULL_VILLAGER_COMMAND): 'Check which villagers have birthdays today (based on UTC date/time).',
-    '{} <villager name>'.format(FULL_VILLAGER_COMMAND): 'Get details on specific village.r',
+    '{} <villager name>'.format(FULL_VILLAGER_COMMAND): 'Get details on specific villager.',
 }
 
 
@@ -42,7 +42,7 @@ def handle(message):
             villager_names = set([record['Name'] for record in records])
             for villager_name in villager_names:
                 birthdays_message += '    ∙ {}\n'.format(villager_name)
-            birthdays_message += 'Try `!villager <villager name>` to learn more!'
+            birthdays_message += 'Try `{}villager <villager name>` to learn more!'.format(COMMAND_PREFIX)
         return message.channel.send(birthdays_message)
 
     villager = get_by_name(IndexNames.villagers, villager_arg, return_attributes=VILLAGER_ATTRIBUTES, image_attribute='Icon Image')
