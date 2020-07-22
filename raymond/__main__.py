@@ -33,18 +33,24 @@ async def on_message(message):
         await message.channel.send('**Invite Link:** https://discord.com/oauth2/authorize?client_id=709555457186070629&scope=bot')
     elif is_message_for(message, Commands.crisp):
         await misc.crisp.handle(raymond, message)
-
-    # info commands
+    elif is_message_for(message, Commands.changelog):
+        await misc.changelog.handle(client, message)
+    # museum commands
     elif is_message_for(message, Commands.fish):
         await info.fish.handle(message)
     elif is_message_for(message, Commands.bug):
         await info.bug.handle(message)
+    elif is_message_for(message, Commands.fossil):
+        await info.fossil.handle(message)
+    elif is_message_for(message, Commands.art):
+        await info.art.handle(message)
+    elif is_message_for(message, Commands.sea_creature):
+        await info.sea_creature.handle(message)
+    # info commands
     elif is_message_for(message, Commands.villager):
         await info.villager.handle(message)
     elif is_message_for(message, Commands.clothing):
         await info.clothing.handle(message)
-    elif is_message_for(message, Commands.fossil):
-        await info.fossil.handle(message)
     elif is_message_for(message, Commands.music):
         await info.music.handle(message)
     elif is_message_for(message, Commands.furniture):
@@ -55,14 +61,13 @@ async def on_message(message):
         await info.wallpaper.handle(message)
     elif is_message_for(message, Commands.tool):
         await info.tool.handle(message)
-    elif is_message_for(message, Commands.art):
-        await info.art.handle(message)
     elif is_message_for(message, Commands.flower):
         await info.flower.handle(message)
     # user commands
     elif is_message_for(message, Commands.profile):
         await user.profile.handle(raymond, message)
-
+    elif is_message_for(message, Commands.island):
+        await user.island.handle(raymond, message)
 
 @client.event
 async def on_ready():
@@ -70,7 +75,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    activity = discord.Game(name="!help")
+    activity = discord.Game(name=f'{COMMAND_PREFIX}{Commands.help.value}')
     await client.change_presence(status=discord.Status.online, activity=activity)
 
 if __name__ == '__main__':

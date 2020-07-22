@@ -18,10 +18,10 @@ PROFILE_FIELDS = {
 
 FULL_PROFILE_COMMAND = COMMAND_PREFIX + Commands.profile.value
 PROFILE_USAGE = {
-    '{} update <field> <value>'.format(FULL_PROFILE_COMMAND): 'Update your profile. Valid fields: {}.'.format(', '.join(PROFILE_FIELDS.keys())),
-    '{} show'.format(FULL_PROFILE_COMMAND): 'Show your profile details.',
-    '{} show <tagged discord user>'.format(FULL_PROFILE_COMMAND): 'Show profile of tagged discord user.',
-    '{} delete'.format(FULL_PROFILE_COMMAND): 'Delete your profile details.',
+    f'{FULL_PROFILE_COMMAND} update <field> <value>': 'Update your profile. Valid fields: {}.'.format(', '.join(PROFILE_FIELDS.keys())),
+    f'{FULL_PROFILE_COMMAND} show': 'Show your profile details.',
+    f'{FULL_PROFILE_COMMAND} show <tagged discord user>': 'Show profile of tagged discord user.',
+    f'{FULL_PROFILE_COMMAND} delete': 'Delete your profile details.',
 }
 
 
@@ -30,17 +30,19 @@ def handle(raymond, message):
     if len(args) <= 1:
         return message.channel.send(build_usage_string(PROFILE_USAGE))
     member = message.author
+    server_id = message.guild.id
+    print(f'Guild: {message.guild}, Server Id: {server_id}')
     if args[1] == 'update':
         if len(args) <= 2:
             return message.channel.send(build_usage_string(PROFILE_USAGE))
         if args[2] in PROFILE_FIELDS:
             if len(args) <= 3:
-                return message.channel.send('❗️Missing input, please add value for {}'.format(args[2]))
+                return message.channel.send(f'❗️Missing input, please add value for {args[2]}')
             attr_name_validator = PROFILE_FIELDS[args[2]]
             attr_value = ' '.join(args[3:])
             if not attr_name_validator[1](attr_value):
-                return message.channel.send('❗️Input "{}" invalid. {}'.format(attr_value, attr_name_validator[2]))
-            result = raymond.set_user(member.id, {attr_name_validator[0]: attr_value})
+                return message.channel.send(f'❗️Input "{attr_value}" invalid. {attr_name_validator[2]}')
+            result = raymond.set_user(f'{server_id}#{member.id}', {attr_name_validator[0]: attr_value})
             return message.channel.send('Profile {}. Use `{} show` to view'.format(result, FULL_PROFILE_COMMAND))
         else:
             return message.channel.send(build_usage_string(PROFILE_USAGE))
@@ -50,10 +52,11 @@ def handle(raymond, message):
         elif message.mentions:
             profile = message.mentions[0]
         else:
-            return message.channel.send('Uh-oh, profile for {} cannot be found. 🤯'.format(args[2]))
-        result = raymond.get_user(profile.id)
+            return message.channel.send(f'Uh-oh, profile for {args[2]} cannot be found. 🤯 '
+                                        f'To view a user profile please use `{FULL_PROFILE_COMMAND} show <tagged user>`.')
+        result = raymond.get_user(f'{server_id}#{profile.id}')
         if not result:
-            return message.channel.send('Uh-oh, profile for {} cannot be found. 🤯'.format(profile))
+            return message.channel.send(f'Uh-oh, profile for {profile} cannot be found. 🤯')
         profile_data = result['_source']
         profile_attrs = {
             '🏝‍ Island': 'Island',
@@ -71,7 +74,7 @@ def handle(raymond, message):
                 message_text += '**{}**: {}\n'.format(display_attr, "N/A")
         return message.channel.send(message_text)
     if args[1] == 'delete':
-        result = raymond.delete_user(member.id)
+        result = raymond.delete_user(f'{server_id}#{member.id}')
         if not result:
-            return message.channel.send('Uh-oh, profile for {} cannot be found. 🤯'.format(member))
-        return message.channel.send('Profile {}.'.format(result['result']))
+            return message.channel.send(f'Uh-oh, profile for {member} cannot be found. 🤯')
+        return message.channel.send(f'Profile {result["result"]}.')

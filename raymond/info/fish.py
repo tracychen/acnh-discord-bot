@@ -44,7 +44,7 @@ def get_and_send_available_fish_message(title, month_abbr):
     sh_names = [sh_record['Name'] for sh_record in sh_records]
     embed.add_field(name='Northern Hemisphere', value=', '.join(nh_names), inline=False)
     embed.add_field(name='Southern Hemisphere', value=', '.join(sh_names), inline=False)
-    embed.set_footer(text='💡 Try `{}fish <fish name>` to learn more!'.format(COMMAND_PREFIX))
+    embed.set_footer(text='💡 Try `{} <fish name>` to learn more!'.format(FULL_FISH_COMMAND))
     return embed
 
 

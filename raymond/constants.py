@@ -17,6 +17,7 @@ class Commands:
     # feature commands
     bug = Command('bug', "Get details on a specific bug or bugs available currently")
     fish = Command('fish', "Get details on a specific fish or fish available currently")
+    sea_creature = Command('sea', "Get details on a specific sea creature or sea creature available currently")
     fossil = Command('fossil', "Get details on a specific fossil")
     clothing = Command('clothing', "Get details a specific clothing item (including umbrellas)")
     music = Command('music', "Get details on a specific K.K. Slider song")
@@ -31,19 +32,21 @@ class Commands:
 
     # user
     profile = Command('profile', "View and edit your island profile, or view another user's profile")
-    island = Command('island', "Setup island visits (in development)")
+    island = Command('island', "Open/close your island for visitors, or view another's island status")
 
     # misc
     invite = Command('invite', "Get bot invite link")
     help = Command('help', "Get list of commands")
     about = Command('about', "Get bot development information")
     crisp = Command('crisp', "Raymond is cute")
+    changelog = Command('changelog', "View bot change log")
 
 
 class IndexNames:
     bugs = 'bugs'
     villagers = 'villagers'
     fish = 'fish'
+    sea_creatures = 'sea_creatures'
     fossils = 'fossils'
     clothing = 'clothing'
     music = 'music'

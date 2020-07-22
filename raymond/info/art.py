@@ -46,7 +46,7 @@ def handle(message):
             painting_names = set([record['Name'] for record in records])
             for painting_name in painting_names:
                 list_of_paintings += '    ∙ {}\n'.format(painting_name)
-            list_of_paintings += 'Try `!art <name of painting>` to learn more about each one!'
+            list_of_paintings += f'Try `{FULL_ART_COMMAND} <name of painting>` to learn more about each one!'
             return message.channel.send(list_of_paintings)
 
         # List of all statues
@@ -56,7 +56,7 @@ def handle(message):
             statue_names = set([record['Name'] for record in records])
             for statue_name in statue_names:
                 list_of_statues += '    ∙ {}\n'.format(statue_name)
-            list_of_statues += 'Try `!art <name of statue>` to learn more about each one!'
+            list_of_statues += f'Try `{FULL_ART_COMMAND} <name of statue>` to learn more about each one!'
             return message.channel.send(list_of_statues)
     item_name = message.content.replace(FULL_ART_COMMAND, '').strip().lower()
     if not item_name:

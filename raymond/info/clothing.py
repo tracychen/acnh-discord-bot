@@ -21,7 +21,7 @@ CLOTHING_USAGE = '{} <clothing name>'.format(FULL_CLOTHING_COMMAND)
 def handle(message):
     clothing_name = message.content.replace(FULL_CLOTHING_COMMAND, '').strip().lower()
     if not clothing_name:
-        return message.channel.send('❗️Fish name not provided, usage is **{}**.'.format(CLOTHING_USAGE))
+        return message.channel.send('❗Clothing name not provided, usage is **{}**.'.format(CLOTHING_USAGE))
     clothing = get_by_name('clothing', clothing_name, return_attributes=CLOTHING_ATTRIBUTES, image_attribute='Closet Image')
     if not clothing:
         return message.channel.send('Uh-oh, item "{}" cannot be found. 👔'.format(clothing_name))

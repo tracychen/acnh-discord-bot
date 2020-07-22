@@ -10,3 +10,4 @@ from . import wallpaper
 from . import tool
 from . import art
 from . import flower
+from . import sea_creature

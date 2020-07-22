@@ -5,7 +5,7 @@ from elasticsearch import Elasticsearch
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_name('ACNH Discord Bot-02b3728f3414.json', scope)
 client = gspread.authorize(creds)
-spreadsheet = client.open('ACNH_data')
+spreadsheet = client.open('ACNH_data_7_22_2020')
 es = Elasticsearch()
 
 
@@ -45,7 +45,7 @@ def index_fish():
 
 
 def index_bugs():
-    sheet = spreadsheet.worksheet('Bugs')
+    sheet = spreadsheet.worksheet('Insects')
     list_of_lists = sheet.get_all_values()
     column_names = list_of_lists[0]
     for sub_list in list_of_lists[1:]:
@@ -58,6 +58,22 @@ def index_bugs():
         mapping['Southern Months'] = southern_months
         mapping['Time'] = time
         res = es.index(index="bugs", id=mapping['#'], body=mapping)
+        print(res['result'])
+
+def index_sea_creatures():
+    sheet = spreadsheet.worksheet('Sea Creatures')
+    list_of_lists = sheet.get_all_values()
+    column_names = list_of_lists[0]
+    for sub_list in list_of_lists[1:]:
+        mapping = dict(zip(column_names, sub_list))
+        northern_months, southern_months, time = get_time_and_months(mapping)
+        mapping['Icon Image'] = 'https://acnhcdn.com/latest/MenuIcon/{}.png'.format(mapping['Icon Filename'])
+        mapping['Critterpedia Image'] = 'https://acnhcdn.com/latest/BookDiveFishIcon/{}.png'.format(mapping['Critterpedia Filename'])
+        mapping['Furniture Image'] = 'https://acnhcdn.com/latest/FtrIcon/{}.png'.format(mapping['Furniture Filename'])
+        mapping['Northern Months'] = northern_months
+        mapping['Southern Months'] = southern_months
+        mapping['Time'] = time
+        res = es.delete(index="sea_creatures", id=mapping['Unique Entry ID'], body=mapping)
         print(res['result'])
 
 
@@ -73,7 +89,7 @@ def index_villagers():
 
 
 def index_clothing(type=None):
-    sheet_names = ['Tops', 'Bottoms', 'Headwear', 'Dress-Up', 'Accessories', 'Socks', 'Shoes', 'Bags', 'Umbrellas']
+    sheet_names = ['Tops', 'Bottoms', 'Headwear', 'Dress-Up', 'Accessories', 'Socks', 'Shoes', 'Bags', 'Umbrellas', 'Clothing Other']
     if type and type in sheet_names:
         sheet_names = [type]
     for sheet_name in sheet_names:
@@ -142,7 +158,7 @@ def index_furniture(type=None):
 
 
 def index_wallpapers():
-    sheet = spreadsheet.worksheet('Wallpapers')
+    sheet = spreadsheet.worksheet('Wallpaper')
     list_of_lists = sheet.get_all_values()
     column_names = list_of_lists[0]
     for sub_list in list_of_lists[1:]:
@@ -245,9 +261,6 @@ def index_art():
         res = es.index(index="art", id=mapping['Unique Entry ID'], body=mapping)
         print(res['result'])
 
-
-index_other()
-#
 # def index_recipes():
 #     sheet = spreadsheet.worksheet('Recipes')
 #     list_of_lists = sheet.get_all_values()
