@@ -2,10 +2,13 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from elasticsearch import Elasticsearch
 
+# Replace this with most up to date ACNH spreadsheet (https://tinyurl.com/acnh-sheet)
+SPREADSHEET_NAME = 'ACNH_data_01_06_2021'
+
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_name('ACNH Discord Bot-02b3728f3414.json', scope)
 client = gspread.authorize(creds)
-spreadsheet = client.open('ACNH_data_7_22_2020')
+spreadsheet = client.open(SPREADSHEET_NAME)
 es = Elasticsearch()
 
 
@@ -99,7 +102,7 @@ def index_clothing(type=None):
         for sub_list in list_of_lists[1:]:
             mapping = dict(zip(column_names, sub_list))
             if sheet_name == 'Umbrellas':
-                mapping['Closet Image'] = 'https://acnhcdn.com/latest/ClosetIcon/{}Cropped.png'.format(mapping['Filename'])
+                mapping['Closet Image'] = 'https://acnhcdn.com/latest/FtrIcon/{}.png'.format(mapping['Filename'])
                 mapping['Seasonal Availability'] = 'Not applicable'
                 mapping['Label Themes'] = 'Not applicable'
                 mapping['Style'] = 'Not applicable'
@@ -272,3 +275,4 @@ def index_art():
 #         res = es.index(index="recipes", id=mapping['Unique Entry ID'], body=mapping)
 #         print(res['result'])
 
+index_villagers()

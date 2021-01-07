@@ -26,7 +26,7 @@ ISLAND_USAGE = {
     '{} {} <friends|bestfriends|all> dm'.format(FULL_ISLAND_COMMAND, OPEN_ARG): 'Open your island to visitors to have them dm you for dodo.',
     '{} {} <friends|bestfriends|all> <dodo code>'.format(FULL_ISLAND_COMMAND, OPEN_ARG): 'Open your island to visitors using dodo code.',
     '{} {} "message inside double quotes"'.format(FULL_ISLAND_COMMAND, NOTE_ARG): 'Add a note to your island (e.g. "Sahara has cloud floor" or "turnips sell 700").',
-    '{} {}'.format(FULL_ISLAND_COMMAND, CLOSE_ARG): 'Mark your island as closed. Also clears NPCs.',
+    '{} {}'.format(FULL_ISLAND_COMMAND, CLOSE_ARG): 'Mark your island as closed. Also clears Dodo codes and notes.',
     '{} {} <tagged discord user>'.format(FULL_ISLAND_COMMAND, STATUS_ARG): 'Show status of your island.'
     # '{} visit <tagged discord user>'.format(FULL_ISLAND_COMMAND): 'Notify another user that you would like to visit.'
 }

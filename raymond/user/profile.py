@@ -14,6 +14,10 @@ PROFILE_FIELDS = {
               '**Valid fruits:** {}.'.format(', '.join(NATIVE_FRUITS))),
     'flower': ('NativeFlower', lambda x: x.lower() in NATIVE_FLOWERS,
                '**Valid flowers:** {}.'.format(', '.join(NATIVE_FLOWERS))),
+    'creatorcode': ('CreatorCode', lambda x: bool(re.match(r'MA-\d{4}-\d{4}-\d{4}', x)),
+                    'Creator code must follow format: "MA-XXXX-XXXX-XXXX".'),
+    'dreamaddress': ('DreamAddress', lambda x: bool(re.match(r'DA-\d{4}-\d{4}-\d{4}', x)),
+                    'Creator code must follow format: "DA-XXXX-XXXX-XXXX".')
 }
 
 FULL_PROFILE_COMMAND = COMMAND_PREFIX + Commands.profile.value
@@ -22,6 +26,7 @@ PROFILE_USAGE = {
     f'{FULL_PROFILE_COMMAND} show': 'Show your profile details.',
     f'{FULL_PROFILE_COMMAND} show <tagged discord user>': 'Show profile of tagged discord user.',
     f'{FULL_PROFILE_COMMAND} delete': 'Delete your profile details.',
+    f'{FULL_PROFILE_COMMAND} delete <field>': 'Delete a specific field from your profile. Valid fields: {}.'.format(', '.join(PROFILE_FIELDS.keys()))
 }
 
 
@@ -59,12 +64,14 @@ def handle(raymond, message):
             return message.channel.send(f'Uh-oh, profile for {profile} cannot be found. 🤯')
         profile_data = result['_source']
         profile_attrs = {
-            '🏝‍ Island': 'Island',
-            '🙋‍ Islander': 'Islander',
+            '🏝 Island': 'Island',
+            '🙋 Islander': 'Islander',
             '🌎 Hemisphere': 'Hemisphere',
             '👫 Friend Code': 'FriendCode',
             '🌷 Native Flower': 'NativeFlower',
-            '🍇 Native Fruit': 'NativeFruit'
+            '🍇 Native Fruit': 'NativeFruit',
+            '🎨 Creator Code': 'CreatorCode',
+            '🌙 Dream Address': 'DreamAddress'
         }
         message_text = '**Profile data for {}:**\n'.format(profile)
         for display_attr, stored_attr in profile_attrs.items():
@@ -74,7 +81,18 @@ def handle(raymond, message):
                 message_text += '**{}**: {}\n'.format(display_attr, "N/A")
         return message.channel.send(message_text)
     if args[1] == 'delete':
-        result = raymond.delete_user(f'{server_id}#{member.id}')
-        if not result:
-            return message.channel.send(f'Uh-oh, profile for {member} cannot be found. 🤯')
-        return message.channel.send(f'Profile {result["result"]}.')
+        if len(args) <= 2:
+            result = raymond.delete_user(f'{server_id}#{member.id}')
+            if not result:
+                return message.channel.send(f'Uh-oh, profile for {member} cannot be found. 🤯')
+            return message.channel.send(f'Profile {result["result"]}.')
+        if args[2] in PROFILE_FIELDS:
+            result = raymond.get_user(f'{server_id}#{member.id}')
+            if not result:
+                return message.channel.send(f'Uh-oh, profile for {member} cannot be found. 🤯')
+            attr_name_validator = PROFILE_FIELDS[args[2]]
+            result = raymond.set_user(f'{server_id}#{member.id}', {attr_name_validator[0]: 'N/A'})
+            return message.channel.send('Profile {} removed. Use `{} show` to view'.format(args[2], FULL_PROFILE_COMMAND))
+        else:
+            return message.channel.send(build_usage_string(PROFILE_USAGE))
+    return message.channel.send(build_usage_string(PROFILE_USAGE))

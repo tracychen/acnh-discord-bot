@@ -9,13 +9,16 @@ VILLAGER_ATTRIBUTES = [
     'Species',
     'Gender',
     'Personality',
+    'Subtype',
     'Hobby',
     'Birthday',
-    'Catchphrase',
     'Style 1',
     'Style 2',
+    'Catchphrase',
     'Color 1',
-    'Color 2'
+    'Color 2',
+    'Favorite Song',
+    'Favorite Saying'
 ]
 FULL_VILLAGER_COMMAND = COMMAND_PREFIX + Commands.villager.value
 VILLAGER_USAGE = {

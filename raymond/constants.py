@@ -31,7 +31,7 @@ class Commands:
 
 
     # user
-    profile = Command('profile', "View and edit your island profile, or view another user's profile")
+    profile = Command('profile', "View and edit your island profile, or view another user's profile. Profiles are saved per Discord server.")
     island = Command('island', "Open/close your island for visitors, or view another's island status")
 
     # misc

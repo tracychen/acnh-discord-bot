@@ -10,7 +10,8 @@ def handle(client, message):
     embed.add_field(name='Servers', value=str(len(client.guilds)), inline=False)
     embed.add_field(name='Developer', value='[tracy#6666](https://discordapp.com/users/360717490013339669)', inline=False)
     embed.add_field(name='Invite Link', value='[Click Here](https://discord.com/oauth2/authorize?client_id=709555457186070629&scope=bot)', inline=False)
-    embed.add_field(name='Vote for Bot', value='[Click Here](https://top.gg/bot/709555457186070629/vote)', inline=False)
-    embed.set_footer(text='Bot last updated 7/22/2020.')
+    embed.add_field(name='Support RAYMOND bot ♡', value='[Vote on top.gg](https://top.gg/bot/709555457186070629/vote)\n[Donate at ko-fi.com](https://ko-fi.com/tracyc)',
+                    inline=False)
+    embed.set_footer(text='Bot last updated 01/06/2021.')
     # embed.set_thumbnail(url='https://acnhcdn.com/latest/NpcIcon/cat23.png')
     return message.channel.send(embed=embed)

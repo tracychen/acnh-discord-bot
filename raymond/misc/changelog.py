@@ -8,6 +8,13 @@ CHANGE_LOG = {
         "Add new wedding and summer items.",
         "Remove notice of back-end change when user profile cannot be found.",
         "Update discord.py library to version 1.3.4"
+    ],
+    "01/06/2021": [
+        "Add new seasonal and event items since last bot update. Includes Halloween, Christmas, and New Years items.",
+        "Add subtype, favorite song, and favorite saying to villager details.",
+        "Add ko-fi link for donations in about command.",
+        "Update profile command to include creator code and dream address.",
+        "Allow removal of a specific field from profile instead of deleting entire profile."
     ]
 }
 
@@ -19,5 +26,5 @@ def handle(client, message):
         for note in CHANGE_LOG[date]:
             notes_string += f' ∙  {note}\n'
         embed.add_field(name=date, value=notes_string, inline=False)
-    embed.set_footer(text='Contact tracy#6666 for feature requests.', icon_url='https://acnhcdn.com/latest/NpcIcon/cat23.png')
+    embed.set_footer(text='Contact tracy#6666 on Discord for feature requests ♡', icon_url='https://acnhcdn.com/latest/NpcIcon/cat23.png')
     return message.channel.send(embed=embed)
